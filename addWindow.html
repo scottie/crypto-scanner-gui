@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <title>Start Scanner</title>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <div>
+                <label>Enter Serial Key: </label>
+                <input type="text" id="token" value="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE0OTY1MDg2LCJleHAiOjE1MTU4MjkwODZ9.ktkM7YdSTvK3LDx2Eq5WYYJmFALuK72MyEUB7SzwUUY">
+
+                <label>Enter Timeframe: </label>
+                <input type="text" id="timeframe" value="5m" autofocus>
+
+                <label>Signal Score: </label>
+                <input type="text" id="score" value="2">
+
+                <label>Markets </label>
+                btc or eth dropdown
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">Start Scanner</button>
+        </form>   
+    </div>
+    <script>
+       const {ipcRenderer} = require('electron');
+       
+       const form = document.querySelector('form');
+       form.addEventListener('submit', submitForm);
+
+       function submitForm(e){
+           e.preventDefault();
+           const timeframe = document.querySelector('#timeframe').value;
+           const token = document.querySelector('#token').value;
+           const score = document.querySelector('#score').value;
+           ipcRenderer.send('signalscore:add', score);
+           ipcRenderer.send('token', token);
+           ipcRenderer.send('timeframe:add', timeframe);           
+       }
+    </script>
+</body>
+</html>

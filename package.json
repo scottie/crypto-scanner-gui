@@ -1,0 +1,19 @@
+{
+  "name": "electron-app-scanner",
+  "version": "1.0.0",
+  "description": "A market signal scanner for all crypto currencies.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Scott Lindh",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.7.10",
+    "extract-zip": "=1.6.0"
+  },
+  "devDependencies": {
+    "electron": "^1.7.10",
+    "extract-zip": "=1.6.0"
+  }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        body {
+            background-color: rgb(235, 231, 231);
+        }
+
+        body * {
+            font-family: 'Montserrat' sans-serif;
+        }   
+
+        #console{
+            font-weight: bold;
+            display: inline-block;
+            background: #8a8a8a;
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+        }
+        
+        #timeframe{
+            margin-left: 70px;
+        }
+
+        .fa-wifi {
+            color: rgb(51, 255, 0);
+        }
+         
+    </style>
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+     <script src="https://use.fontawesome.com/85890926e3.js"></script>
+
+     
+    <title>Crypto Signal Scanner</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a class="brand-logo center">Signal List</a>
+            <a class="timeframe" id="timeframe"></a>
+        </div>
+    </nav>
+    
+    <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s12">
+                        <code id= "console" contenteditable="true" row="4" rows="5" id="console" class="materialize-textarea" wrap="off" style="overflow:auto">
+                        </code>                
+                        <label class="active" for="logBox">Console:</label>
+                </div>
+              </div>
+            </form>
+          </div>
+
+    <ul></ul>
+    
+   
+
+    <!-- logs 
+        <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea rows="5" id="console" class="materialize-textarea" wrap="off" style="overflow:auto"></textarea>
+                      <label class="active" for="textarea1">Console:</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            -->
+                    
+
+    <footer class="page-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col l6 s12">
+                    <i class="fa fa-wifi" aria-hidden="true"></i> BullorBear Online
+                </div>
+                <div class="col l4 offset-l2 s12">
+                </div>
+              </div>
+            </div>
+            <div class="footer-copyright">
+              <div class="container">
+              © 2018 All Rights Reserved, BullorBear.io
+              <a class="grey-text text-lighten-4 right" href="http://bullorbear.io">Vist Us Online</a>
+              </div>
+            </div>
+          </footer>
+                      
+    <script>
+    const {ipcRenderer} = require('electron');
+    const ul = document.querySelector('ul');
+
+        
+    //add insturment
+    ipcRenderer.on('scannerResults:add', function(e, item){
+        if(item.indexOf("Error") == -1){        
+            ul.className = 'collection';
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        }else{
+            //log error to user
+            logger(item);
+        }
+    });
+
+    function logger(log){
+        const logBox = document.querySelector('#console');
+        var dataTime = new Date().toLocaleString();
+        logBox.innerHTML = '<span style="color: #3bc7f1;">' +dataTime+ '</span><span style="color: white;">' + " #> </span>" + '<span style="color: green;">' + log + "</span><br> " + logBox.innerHTML;
+    }
+
+    ipcRenderer.on('timeframe:change', function(e, timeframe){
+        const timeFrameSpot = document.querySelector('#timeframe');
+        timeFrameSpot.innerHTML = timeframe;
+    });
+
+    ipcRenderer.on('logger:log', function(e, log){
+        console.log(log);
+        logger(log);
+    });
+
+    //clear instrument
+    ipcRenderer.on('scannerResults:clear', function(e, timeframe){
+        ul.innerHTML = '';
+        ul.className == '';
+    });
+
+    //remove item
+    ul.addEventListener('dblclick', removeItem);
+    function removeItem(e){
+        e.target.remove();
+        if(ul.children.length == 0){
+            ul.className == '';
+        }
+    }
+    </script>
+</body>
+</html>
