@@ -9,7 +9,7 @@
   "author": "Scott Lindh",
   "license": "ISC",
   "dependencies": {
-    "electron": "^1.7.10",
+    "electron": "^1.8.8",
     "extract-zip": "=1.6.0"
   },
   "devDependencies": {
