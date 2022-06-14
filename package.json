@@ -9,11 +9,11 @@
   "author": "Scott Lindh",
   "license": "ISC",
   "dependencies": {
-    "electron": "^1.7.10",
+    "electron": "^15.5.6",
     "extract-zip": "=1.6.0"
   },
   "devDependencies": {
-    "electron": "^1.7.10",
+    "electron": "^15.5.6",
     "extract-zip": "=1.6.0"
   }
 }
